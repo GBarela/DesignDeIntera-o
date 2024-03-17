@@ -1,0 +1,38 @@
+.card{
+    width: 400px;
+    margin: auto;
+    padding: 10px 10px 0px 10px;
+    border: 1px solid;
+}
+
+.img{
+    width: 400px;
+    height: 400px;
+}
+
+.container{
+    padding: 5px 0px;
+}
+
+.container h2{
+    margin: 0px;
+    font-size: 22px;
+}
+
+.container .center{
+    text-align: center;
+    padding: 10px 0;
+    font-size: 17px;
+}
+
+.container .right{
+    text-align: right;
+}
+
+button{
+    display: block;
+    margin: 5px auto;
+    width: 400px;
+    padding: 5x 0;
+    font-size: 18px;
+}
