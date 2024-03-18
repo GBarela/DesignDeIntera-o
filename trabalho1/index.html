@@ -36,6 +36,24 @@
   <script>
 
     var imagesrc = "img/exemplo.jpg";
+    //abaixo o que envia o documento para o diretório
+    $(document).ready(function(){
+      $('#image').change(function(){
+        var formData = new formData();
+        var files = $('#image')[0].files;
+        formData.append('image', files[0]);
+        $.ajax({
+          url: 'upload.php',
+          type: 'post',
+          data: formData,
+          contentType: false,
+          processData: false,
+          sucess: function(response) {
+            imagesrc = response;
+          }
+        });
+      })
+    });
 
 
     //abaixo o preview em tempo real
