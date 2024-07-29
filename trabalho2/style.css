@@ -1,84 +1,67 @@
-* {
+*{
     padding: 0;
     margin: 0;
-    font-family: 'Itim', cursive;
+    box-sizing: border-box;
 }
 
-.background {
-    background-color: #12181B;
-    height: 100vh;
-    padding-top: 1px;
+:root {
+    --orange: #F2C14E;
+    --winning-blocks: #2d414b;
 }
 
-.title {
-    color: white;
-    text-align: center;
-    font-size: 40px;
-    margin-top: 10%;
+body {
+    color: var(--orange);
+    font-family: 'Finger Paint', cursive;
 }
-
-.display {
-    color: white;
-    font-size: 25px;
-    text-align: center;
-    margin-top: 1em;
-    margin-bottom: 1em;
-}
-
-.hide {
-    display: none;
+h1 {
+    font-size: 54px;
+    text-transform: uppercase;
 }
 
 .container {
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 33% 33% 33%;
-    grid-template-rows: 33% 33% 33%;
-    max-width: 300px;
-
-}
-
-.tile {
-    border: 1px solid white;
-    min-width: 100px;
-    min-height: 100px;
+    padding: 40px;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 50px;
-    cursor: pointer;
+    flex-direction: column;
+    background-color: #37505C;
 }
 
-.playerX {
-    color: #09C372;
-}
-
-.playerO {
-    color: #498AFB;
-}
-
-.controls {
+#gameboard {
+    width: 300px;
     display: flex;
-    flex-direction: row;
-    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 40px;
+}
+.box {
+    height: 100px;
+    width: 100px;
+    display: flex;
     align-items: center;
-    margin-top: 1em;
+    justify-content: center;
+    color: var(--orange);
+    font-size: 120px;
+    border-right: 2px solid;
+    border-bottom: 2px solid;
 }
-
-.controls button {
-    color: white;
-    padding: 8px;
-    border-radius: 8px;
-    border: none;
-    font-size: 20px;
-    margin-left: 1em;
+.box:nth-child(3n) {
+    border-right: none;
+}
+.box:nth-child(6) ~ .box {
+    border-bottom: none;
+} 
+button {
+    padding: 10px 20px;
+    border-radius: 10px;
+    background-color: var(--orange);
+    color: #333;
+    border-color: var(--orange);
+    font-size: 18px;
+    transition: 200ms transform;
+    font-weight: 600;
+}
+button:hover {
     cursor: pointer;
-}
-
-.restart {
-    background-color: #498AFB;
-}
-
-#reset {
-    background-color: #FF3860;
+    transform: translateY(-2px);
 }
