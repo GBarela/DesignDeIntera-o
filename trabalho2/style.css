@@ -1,5 +1,6 @@
 body {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
@@ -11,10 +12,25 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #010101;
+    background-color: #333;
     border: 5px solid #fff;
 }
 
 canvas {
-    background-color: #010101;
+    background-color: #000;
+}
+
+#startButton {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 5px;
+}
+
+#startButton:hover {
+    background-color: #45a049;
 }
