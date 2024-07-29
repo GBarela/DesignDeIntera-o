@@ -7,7 +7,14 @@ body {
     background-color: #f0f0f0;
 }
 
-canvas {
+.game-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: #333;
     border: 5px solid #fff;
+}
+
+canvas {
+    background-color: #000;
 }
