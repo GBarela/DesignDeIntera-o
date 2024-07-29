@@ -1,5 +1,5 @@
 window.addEventListener('DOMContentLoaded', () => {
-    const tiles = Array.from(document.querySelectorAll('.tile'));
+    const caixas = Array.from(document.querySelectorAll('.caixa'));
     const jogadorDisplay = document.querySelector('.display-jogador');
     const resetButton = document.querySelector('#reset');
     const announcer = document.querySelector('.announcer');
@@ -71,8 +71,8 @@ F
         announcer.classList.remove('hide');
     };
 
-    const isValidAction = (tile) => {
-        if (tile.innerText === 'X' || tile.innerText === 'O'){
+    const isValidAction = (caixa) => {
+        if (caixa.innerText === 'X' || caixa.innerText === 'O'){
             return false;
         }
 
@@ -90,10 +90,10 @@ F
         jogadorDisplay.classList.add(`jogador${currentJogador}`);
     }
 
-    const userAction = (tile, index) => {
-        if(isValidAction(tile) && isGameActive) {
-            tile.innerText = currentJogador;
-            tile.classList.add(`jogador${currentJogador}`);
+    const userAction = (caixa, index) => {
+        if(isValidAction(caixa) && isGameActive) {
+            caixa.innerText = currentJogador;
+            caixa.classList.add(`jogador${currentJogador}`);
             updateBoard(index);
             handleResultValidation();
             changeJogador();
@@ -109,15 +109,15 @@ F
             changeJogador();
         }
 
-        tiles.forEach(tile => {
-            tile.innerText = '';
-            tile.classList.remove('jogadorX');
-            tile.classList.remove('jogadorO');
+        caixas.forEach(caixa => {
+            caixa.innerText = '';
+            caixa.classList.remove('jogadorX');
+            caixa.classList.remove('jogadorO');
         });
     }
 
-    tiles.forEach( (tile, index) => {
-        tile.addEventListener('click', () => userAction(tile, index));
+    caixas.forEach( (caixa, index) => {
+        caixa.addEventListener('click', () => userAction(caixa, index));
     });
 
     resetButton.addEventListener('click', resetBoard);
