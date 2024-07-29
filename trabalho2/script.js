@@ -1,16 +1,16 @@
 window.addEventListener('DOMContentLoaded', () => {
     const tiles = Array.from(document.querySelectorAll('.tile'));
-    const playerDisplay = document.querySelector('.display-player');
+    const jogadorDisplay = document.querySelector('.display-jogador');
     const resetButton = document.querySelector('#reset');
     const announcer = document.querySelector('.announcer');
-
+F
     let board = ['', '', '', '', '', '', '', '', ''];
-    let currentPlayer = 'X';
+    let currentjogador = 'X';
     let isGameActive = true;
 
-    const PLAYERX_WON = 'PLAYERX_WON';
-    const PLAYERO_WON = 'PLAYERO_WON';
-    const TIE = 'TIE';
+    const JOGADORX_WON = 'JOGADORX_WON';
+    const JOGADORO_WON = 'JOGADORO_WON';
+    const EMPATE = 'EMPATE';
 
 
     /*
@@ -48,25 +48,25 @@ window.addEventListener('DOMContentLoaded', () => {
         }
 
     if (roundWon) {
-            announce(currentPlayer === 'X' ? PLAYERX_WON : PLAYERO_WON);
+            announce(currentjogador === 'X' ? JOGADORX_WON : JOGADORO_WON);
             isGameActive = false;
             return;
         }
 
     if (!board.includes(''))
-        announce(TIE);
+        announce(EMPATE);
     }
 
     const announce = (type) => {
         switch(type){
-            case PLAYERO_WON:
-                announcer.innerHTML = 'Player <span class="playerO">O</span> Won';
+            case JOGADORO_WON:
+                announcer.innerHTML = 'jogador <span class="jogadorO">O</span> Won';
                 break;
-            case PLAYERX_WON:
-                announcer.innerHTML = 'Player <span class="playerX">X</span> Won';
+            case JOGADORX_WON:
+                announcer.innerHTML = 'jogador <span class="jogadorX">X</span> Won';
                 break;
-            case TIE:
-                announcer.innerText = 'Tie';
+            case EMPATE:
+                announcer.innerText = 'EMPATE';
         }
         announcer.classList.remove('hide');
     };
@@ -80,23 +80,23 @@ window.addEventListener('DOMContentLoaded', () => {
     };
 
     const updateBoard =  (index) => {
-        board[index] = currentPlayer;
+        board[index] = currentJogador;
     }
 
-    const changePlayer = () => {
-        playerDisplay.classList.remove(`player${currentPlayer}`);
-        currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-        playerDisplay.innerText = currentPlayer;
-        playerDisplay.classList.add(`player${currentPlayer}`);
+    const changeJogador = () => {
+        jogadorDisplay.classList.remove(`jogador${currentJogador}`);
+        currentJogador = currentJogador === 'X' ? 'O' : 'X';
+        jogadorDisplay.innerText = currentJogador;
+        jogadorDisplay.classList.add(`jogador${currentJogador}`);
     }
 
     const userAction = (tile, index) => {
         if(isValidAction(tile) && isGameActive) {
-            tile.innerText = currentPlayer;
-            tile.classList.add(`player${currentPlayer}`);
+            tile.innerText = currentJogador;
+            tile.classList.add(`jogador${currentJogador}`);
             updateBoard(index);
             handleResultValidation();
-            changePlayer();
+            changeJogador();
         }
     }
     
@@ -105,14 +105,14 @@ window.addEventListener('DOMContentLoaded', () => {
         isGameActive = true;
         announcer.classList.add('hide');
 
-        if (currentPlayer === 'O') {
-            changePlayer();
+        if (currentJogador === 'O') {
+            changeJogador();
         }
 
         tiles.forEach(tile => {
             tile.innerText = '';
-            tile.classList.remove('playerX');
-            tile.classList.remove('playerO');
+            tile.classList.remove('jogadorX');
+            tile.classList.remove('jogadorO');
         });
     }
 
