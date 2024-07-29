@@ -14,7 +14,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
     /*
-        board fica assim
+        Indexes within the board
         [0] [1] [2]
         [3] [4] [5]
         [6] [7] [8]
@@ -60,13 +60,13 @@ window.addEventListener('DOMContentLoaded', () => {
     const announce = (type) => {
         switch(type){
             case PLAYERO_WON:
-                announcer.innerHTML = 'Jogador <span class="playerO">O</span> Venceu';
+                announcer.innerHTML = 'Player <span class="playerO">O</span> Won';
                 break;
             case PLAYERX_WON:
-                announcer.innerHTML = 'Jogador <span class="playerX">X</span> Venceu';
+                announcer.innerHTML = 'Player <span class="playerX">X</span> Won';
                 break;
             case TIE:
-                announcer.innerText = 'Empate';
+                announcer.innerText = 'Tie';
         }
         announcer.classList.remove('hide');
     };
