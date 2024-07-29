@@ -1,5 +1,6 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
+const startButton = document.getElementById('startButton');
 
 const gridSize = 20;
 const canvasSize = canvas.width;
@@ -8,7 +9,13 @@ let direction = 'RIGHT';
 let food = getRandomFoodPosition();
 let score = 0;
 
+startButton.addEventListener('click', startGame);
 document.addEventListener('keydown', changeDirection);
+
+function startGame() {
+    startButton.style.display = 'none';
+    gameLoop();
+}
 
 function gameLoop() {
     if (isGameOver()) {
@@ -106,5 +113,3 @@ function isGameOver() {
     const hitSelf = snake.slice(1).some(part => part.x === head.x && part.y === head.y);
     return hitWall || hitSelf;
 }
-
-gameLoop();
