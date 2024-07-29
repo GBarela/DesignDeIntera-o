@@ -38,7 +38,7 @@
 
 }
 
-.tile {
+.caixa {
     border: 1px solid white;
     min-width: 100px;
     min-height: 100px;
@@ -49,11 +49,11 @@
     cursor: pointer;
 }
 
-.playerX {
+.jogadorX {
     color: #09C372;
 }
 
-.playerO {
+.jogadorO {
     color: #498AFB;
 }
 
