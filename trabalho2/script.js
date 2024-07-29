@@ -1,115 +1,124 @@
-const canvas = document.getElementById('gameCanvas');
-const ctx = canvas.getContext('2d');
-const startButton = document.getElementById('startButton');
+window.addEventListener('DOMContentLoaded', () => {
+    const tiles = Array.from(document.querySelectorAll('.tile'));
+    const playerDisplay = document.querySelector('.display-player');
+    const resetButton = document.querySelector('#reset');
+    const announcer = document.querySelector('.announcer');
 
-const gridSize = 20;
-const canvasSize = canvas.width;
-let snake = [{x: gridSize * 5, y: gridSize * 5}];
-let direction = 'RIGHT';
-let food = getRandomFoodPosition();
-let score = 0;
+    let board = ['', '', '', '', '', '', '', '', ''];
+    let currentPlayer = 'X';
+    let isGameActive = true;
 
-startButton.addEventListener('click', startGame);
-document.addEventListener('keydown', changeDirection);
+    const PLAYERX_WON = 'PLAYERX_WON';
+    const PLAYERO_WON = 'PLAYERO_WON';
+    const TIE = 'TIE';
 
-function startGame() {
-    startButton.style.display = 'none';
-    gameLoop();
-}
 
-function gameLoop() {
-    if (isGameOver()) {
-        alert(`Game Over! Your score: ${score}`);
-        document.location.reload();
-    } else {
-        setTimeout(() => {
-            clearCanvas();
-            drawFood();
-            moveSnake();
-            drawSnake();
-            gameLoop();
-        }, 100);
+    /*
+        Indexes within the board
+        [0] [1] [2]
+        [3] [4] [5]
+        [6] [7] [8]
+    */
+
+    const winningConditions = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6]
+    ];
+
+    function handleResultValidation() {
+        let roundWon = false;
+        for (let i = 0; i <= 7; i++) {
+            const winCondition = winningConditions[i];
+            const a = board[winCondition[0]];
+            const b = board[winCondition[1]];
+            const c = board[winCondition[2]];
+            if (a === '' || b === '' || c === '') {
+                continue;
+            }
+            if (a === b && b === c) {
+                roundWon = true;
+                break;
+            }
+        }
+
+    if (roundWon) {
+            announce(currentPlayer === 'X' ? PLAYERX_WON : PLAYERO_WON);
+            isGameActive = false;
+            return;
+        }
+
+    if (!board.includes(''))
+        announce(TIE);
     }
-}
 
-function clearCanvas() {
-    ctx.clearRect(0, 0, canvasSize, canvasSize);
-}
+    const announce = (type) => {
+        switch(type){
+            case PLAYERO_WON:
+                announcer.innerHTML = 'Player <span class="playerO">O</span> Won';
+                break;
+            case PLAYERX_WON:
+                announcer.innerHTML = 'Player <span class="playerX">X</span> Won';
+                break;
+            case TIE:
+                announcer.innerText = 'Tie';
+        }
+        announcer.classList.remove('hide');
+    };
 
-function drawSnake() {
-    ctx.fillStyle = 'lime';
-    snake.forEach(part => {
-        ctx.fillRect(part.x, part.y, gridSize, gridSize);
+    const isValidAction = (tile) => {
+        if (tile.innerText === 'X' || tile.innerText === 'O'){
+            return false;
+        }
+
+        return true;
+    };
+
+    const updateBoard =  (index) => {
+        board[index] = currentPlayer;
+    }
+
+    const changePlayer = () => {
+        playerDisplay.classList.remove(`player${currentPlayer}`);
+        currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+        playerDisplay.innerText = currentPlayer;
+        playerDisplay.classList.add(`player${currentPlayer}`);
+    }
+
+    const userAction = (tile, index) => {
+        if(isValidAction(tile) && isGameActive) {
+            tile.innerText = currentPlayer;
+            tile.classList.add(`player${currentPlayer}`);
+            updateBoard(index);
+            handleResultValidation();
+            changePlayer();
+        }
+    }
+    
+    const resetBoard = () => {
+        board = ['', '', '', '', '', '', '', '', ''];
+        isGameActive = true;
+        announcer.classList.add('hide');
+
+        if (currentPlayer === 'O') {
+            changePlayer();
+        }
+
+        tiles.forEach(tile => {
+            tile.innerText = '';
+            tile.classList.remove('playerX');
+            tile.classList.remove('playerO');
+        });
+    }
+
+    tiles.forEach( (tile, index) => {
+        tile.addEventListener('click', () => userAction(tile, index));
     });
-}
 
-function moveSnake() {
-    const head = {x: snake[0].x, y: snake[0].y};
-    switch (direction) {
-        case 'LEFT':
-            head.x -= gridSize;
-            break;
-        case 'UP':
-            head.y -= gridSize;
-            break;
-        case 'RIGHT':
-            head.x += gridSize;
-            break;
-        case 'DOWN':
-            head.y += gridSize;
-            break;
-    }
-    snake.unshift(head);
-
-    if (head.x === food.x && head.y === food.y) {
-        score += 10;
-        food = getRandomFoodPosition();
-    } else {
-        snake.pop();
-    }
-}
-
-function changeDirection(event) {
-    const key = event.keyCode;
-    const goingUp = direction === 'UP';
-    const goingDown = direction === 'DOWN';
-    const goingRight = direction === 'RIGHT';
-    const goingLeft = direction === 'LEFT';
-
-    if (key === 37 && !goingRight) {
-        direction = 'LEFT';
-    } else if (key === 38 && !goingDown) {
-        direction = 'UP';
-    } else if (key === 39 && !goingLeft) {
-        direction = 'RIGHT';
-    } else if (key === 40 && !goingUp) {
-        direction = 'DOWN';
-    }
-}
-
-function getRandomFoodPosition() {
-    let position;
-    do {
-        position = {
-            x: Math.floor(Math.random() * (canvasSize / gridSize)) * gridSize,
-            y: Math.floor(Math.random() * (canvasSize / gridSize)) * gridSize,
-        };
-    } while (isSnakePosition(position));
-    return position;
-}
-
-function drawFood() {
-    ctx.fillStyle = 'red';
-    ctx.fillRect(food.x, food.y, gridSize, gridSize);
-}
-
-function isSnakePosition(position) {
-    return snake.some(part => part.x === position.x && part.y === position.y);
-}
-
-function isGameOver() {
-    const head = snake[0];
-    const hitWall = head.x < 0 || head.x >= canvasSize || head.y < 0 || head.y >= canvasSize;
-    const hitSelf = snake.slice(1).some(part => part.x === head.x && part.y === head.y);
-    return hitWall || hitSelf;
-}
+    resetButton.addEventListener('click', resetBoard);
+});
