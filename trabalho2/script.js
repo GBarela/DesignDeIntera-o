@@ -1,16 +1,16 @@
 window.addEventListener('DOMContentLoaded', () => {
-    const caixas = Array.from(document.querySelectorAll('.caixa'));
-    const jogadorDisplay = document.querySelector('.display-jogador');
+    const tiles = Array.from(document.querySelectorAll('.tile'));
+    const playerDisplay = document.querySelector('.display-player');
     const resetButton = document.querySelector('#reset');
     const announcer = document.querySelector('.announcer');
-F
+
     let board = ['', '', '', '', '', '', '', '', ''];
-    let currentjogador = 'X';
+    let currentPlayer = 'X';
     let isGameActive = true;
 
-    const JOGADORX_WON = 'JOGADORX_WON';
-    const JOGADORO_WON = 'JOGADORO_WON';
-    const EMPATE = 'EMPATE';
+    const PLAYERX_WON = 'PLAYERX_WON';
+    const PLAYERO_WON = 'PLAYERO_WON';
+    const TIE = 'TIE';
 
 
     /*
@@ -48,31 +48,31 @@ F
         }
 
     if (roundWon) {
-            announce(currentjogador === 'X' ? JOGADORX_WON : JOGADORO_WON);
+            announce(currentPlayer === 'X' ? PLAYERX_WON : PLAYERO_WON);
             isGameActive = false;
             return;
         }
 
     if (!board.includes(''))
-        announce(EMPATE);
+        announce(TIE);
     }
 
     const announce = (type) => {
         switch(type){
-            case JOGADORO_WON:
-                announcer.innerHTML = 'jogador <span class="jogadorO">O</span> Won';
+            case PLAYERO_WON:
+                announcer.innerHTML = 'Player <span class="playerO">O</span> Won';
                 break;
-            case JOGADORX_WON:
-                announcer.innerHTML = 'jogador <span class="jogadorX">X</span> Won';
+            case PLAYERX_WON:
+                announcer.innerHTML = 'Player <span class="playerX">X</span> Won';
                 break;
-            case EMPATE:
-                announcer.innerText = 'EMPATE';
+            case TIE:
+                announcer.innerText = 'Tie';
         }
         announcer.classList.remove('hide');
     };
 
-    const isValidAction = (caixa) => {
-        if (caixa.innerText === 'X' || caixa.innerText === 'O'){
+    const isValidAction = (tile) => {
+        if (tile.innerText === 'X' || tile.innerText === 'O'){
             return false;
         }
 
@@ -80,23 +80,23 @@ F
     };
 
     const updateBoard =  (index) => {
-        board[index] = currentJogador;
+        board[index] = currentPlayer;
     }
 
-    const changeJogador = () => {
-        jogadorDisplay.classList.remove(`jogador${currentJogador}`);
-        currentJogador = currentJogador === 'X' ? 'O' : 'X';
-        jogadorDisplay.innerText = currentJogador;
-        jogadorDisplay.classList.add(`jogador${currentJogador}`);
+    const changePlayer = () => {
+        playerDisplay.classList.remove(`player${currentPlayer}`);
+        currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+        playerDisplay.innerText = currentPlayer;
+        playerDisplay.classList.add(`player${currentPlayer}`);
     }
 
-    const userAction = (caixa, index) => {
-        if(isValidAction(caixa) && isGameActive) {
-            caixa.innerText = currentJogador;
-            caixa.classList.add(`jogador${currentJogador}`);
+    const userAction = (tile, index) => {
+        if(isValidAction(tile) && isGameActive) {
+            tile.innerText = currentPlayer;
+            tile.classList.add(`player${currentPlayer}`);
             updateBoard(index);
             handleResultValidation();
-            changeJogador();
+            changePlayer();
         }
     }
     
@@ -105,19 +105,19 @@ F
         isGameActive = true;
         announcer.classList.add('hide');
 
-        if (currentJogador === 'O') {
-            changeJogador();
+        if (currentPlayer === 'O') {
+            changePlayer();
         }
 
-        caixas.forEach(caixa => {
-            caixa.innerText = '';
-            caixa.classList.remove('jogadorX');
-            caixa.classList.remove('jogadorO');
+        tiles.forEach(tile => {
+            tile.innerText = '';
+            tile.classList.remove('playerX');
+            tile.classList.remove('playerO');
         });
     }
 
-    caixas.forEach( (caixa, index) => {
-        caixa.addEventListener('click', () => userAction(caixa, index));
+    tiles.forEach( (tile, index) => {
+        tile.addEventListener('click', () => userAction(tile, index));
     });
 
     resetButton.addEventListener('click', resetBoard);
