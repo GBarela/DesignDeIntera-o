@@ -16,6 +16,7 @@ body {
 h1 {
     font-size: 54px;
     text-transform: uppercase;
+    text-align: center;
 }
 
 .container {
@@ -26,7 +27,6 @@ h1 {
     align-items: center;
     flex-direction: column;
     background-color: #37505C;
-    text-align: center;
 }
 
 #gameboard {
