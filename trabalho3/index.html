@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Consumindo APIs com JavaScript</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <nav class="container-fluid">
+        <ul>
+            <li><strong>APIs com JavaScript</strong></li>
+        </ul>
+        <ul>
+            <li><a href="#consulta1">Consulta 1</a></li>
+            <li><a href="#consulta2">Consulta 2</a></li>
+            <li><a href="#consulta3">Consulta 3</a></li>
+            <li><a href="#consulta4">Consulta 4</a></li>
+            <li><a href="#exercicio2">Exercício 2</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <!-- Consulta 1 -->
+        <section id="consulta1">
+                <h2>Consulta 1</h2>
+                <h3>Consulta Programada 1: Dados de Feriados Nacionais</h3>
+            <p>Esta consulta acessa a API de Feriados Nacionais no Brasil e mostra os feriados do ano atual.</p>
+            <pre id="result1">Carregando...</pre>
+        </section>
+
+        <!-- Consulta 2 -->
+        <section id="consulta2">
+            
+                <h2>Consulta 2</h2>
+                <h3>Consulta Programada 2: Taxas de Câmbio</h3>
+            
+            <p>Esta consulta acessa a API de taxas de câmbio e exibe as cotações de algumas moedas.</p>
+            <pre id="result2">Carregando...</pre>
+        </section>
+
+        <!-- Consulta (via formulário) 3: CEP -->
+        <section id="consulta3">
+            
+                <h2>Consulta 3</h2>
+                <h3>Consulta Personalizada 1: Informações de CEP</h3>
+            
+            <p>Digite um CEP para obter informações detalhadas sobre ele.</p>
+            <form id="cepForm">
+                <input type="text" id="cepInput" name="cep" placeholder="Digite o CEP" required>
+                <button type="submit">Consultar CEP</button>
+            </form>
+            <pre id="result3">Resultado aparecerá aqui...</pre>
+        </section>
+
+        <!-- Consulta (via formulário) 4: Banco -->
+        <section id="consulta4">
+                <h2>Consulta 4</h2>
+                <h3>Consulta Personalizada 2: Informações sobre Banco</h3>
+            <p>Digite o código de um banco para obter informações detalhadas.</p>
+            <form id="bankForm">
+                <input type="text" id="bankInput" name="bank" placeholder="Digite o código do banco" required>
+                <button type="submit">Consultar Banco</button>
+            </form>
+            <pre id="result4">Resultado aparecerá aqui...</pre>
+        </section>
+
+        <!-- Promises -->
+        <section id="exercicio2">
+                <h2>Exercício 2</h2>
+                <h3>Consumo de Múltiplas APIs com Promise.race e Promise.all</h3>
+            <p>Clique nos botões abaixo para realizar consultas a múltiplas APIs.</p>
+
+            <button id="raceButton">Executar Promise.race</button>
+            <pre id="raceResult">Resultado da primeira promessa resolvida aparecerá aqui...</pre>
+
+            <button id="allButton">Executar Promise.all</button>
+            <pre id="allResult">Resultados das três promessas aparecerão aqui...</pre>
+        </section>
+
+    </main>
+
+    <footer class="container">
+        <small><a href="https://brasilapi.com.br/" target="_blank">Brasil API</a> • <a href="https://github.com/public-apis/public-apis" target="_blank">Public APIs</a></small>
+    </footer>
+
+    <script src="../trabalho3/script.js"></script>
+
+
+</body>
+
+</html>
